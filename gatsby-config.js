@@ -1,5 +1,9 @@
 'use strict'
 
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
     title: 'gatsby-github-starter',
@@ -28,7 +32,7 @@ module.exports = {
       resolve: `gatsby-source-github-api`,
       options: {
         // token: required by the GitHub API
-        token: '696ff89484f54b051c6505f72ec00e7a9e206ae9',
+        token: process.env.GATSBY_GITHUB_TOKEN,
 
         variables: {},
 
@@ -55,23 +59,7 @@ module.exports = {
                   }
                 }
               }
-              pinnedRepositories(first:6) {
-                edges {
-                  node {
-                    id
-                    name
-                    description
-                    id
-                    url
-                    createdAt
-                    primaryLanguage {
-                      id
-                      name
-                      color
-                    }
-                  }
-                }
-              }
+
               repositories(first: 9, privacy: PUBLIC, orderBy: {field: UPDATED_AT, direction: DESC}) {
                 edges {
                   node {

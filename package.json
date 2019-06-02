@@ -1,6 +1,6 @@
 {
   "name": "gatsby-github-starter",
-  "description": "a simple portfolio site for luke secomb",
+  "description": "GatsbyJS starter feat. Github GraphQL v4 / TypeScript / Emotion / React Spring",
   "version": "0.1.0",
   "author": "Luke Secomb <hello@lukesecomb.digital>",
   "keywords": [
@@ -26,7 +26,6 @@
   "dependencies": {
     "@emotion/core": "^10.0.5",
     "@emotion/styled": "^10.0.11",
-    "axios": "^0.18.1",
     "babel-plugin-styled-components": "^1.7.1",
     "classnames": "^2.2.6",
     "gatsby": "^2.8.2",
