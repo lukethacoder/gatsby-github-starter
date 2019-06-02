@@ -4,6 +4,105 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
+// {
+//   resolve: `gatsby-source-github-api`,
+//   options: {
+//     // token: required by the GitHub API
+//     token: process.env.GATSBY_GITHUB_TOKEN,
+
+//     variables: {
+//       author: 'lukethacoder',
+//     },
+
+//     // Github GraphQL explorer - https://developer.github.com/v4/explorer
+//     // * pinnedRepositories will need to be changed to pinnedItems on 2019/07/01 *
+//     graphQLQuery: `
+//       query($author: String = "") {
+//         user(login: $author) {
+//           login
+//           bio
+//           name
+//           company
+//           avatarUrl
+//           url
+//           status {
+//             id
+//             emoji
+//             message
+//           }
+//           organizations(first: 6) {
+//             edges {
+//               node {
+//                 name
+//               }
+//             }
+//           }
+
+//           repositories(first: 9, privacy: PUBLIC, orderBy: {field: UPDATED_AT, direction: DESC}) {
+//             edges {
+//               node {
+//                 id
+//                 name
+//                 description
+//                 forkCount
+//                 createdAt
+//                 pushedAt
+//                 updatedAt
+//                 isFork
+//                 url
+//                 primaryLanguage {
+//                   id
+//                   name
+//                   color
+//                 }
+//               }
+//             }
+//           }
+//           repositoriesContributedTo(first: 6) {
+//             edges {
+//               node {
+//                 id
+//                 name
+//                 description
+//                 forkCount
+//                 createdAt
+//                 pushedAt
+//                 updatedAt
+//                 isFork
+//                 url
+//                 owner {
+//                   url
+//                   login
+//                 }
+//                 primaryLanguage {
+//                   id
+//                   name
+//                   color
+//                 }
+//               }
+//             }
+//           }
+//           starredRepositories(first: 240, orderBy: {field: STARRED_AT, direction: DESC}) {
+//             edges {
+//               node {
+//                 id
+//                 name
+//                 url
+//                 createdAt
+//                 forkCount
+//                 owner {
+//                   url
+//                   login
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     `,
+//   },
+// },
+
 module.exports = {
   siteMetadata: {
     title: 'gatsby-github-starter',
@@ -29,108 +128,20 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-source-github-api`,
+      resolve: 'gatsby-source-graphql',
       options: {
-        // token: required by the GitHub API
-        token: process.env.GATSBY_GITHUB_TOKEN,
-
-        variables: {},
-
-        // Github GraphQL explorer - https://developer.github.com/v4/explorer
-        // * pinnedRepositories will need to be changed to pinnedItems on 2019/07/01 *
-        graphQLQuery: `
-          query {
-            viewer {
-              login
-              bio
-              name
-              company
-              avatarUrl
-              url
-              status {
-                id
-                emoji
-                message
-              }
-              organizations(first: 6) {
-                edges {
-                  node {
-                    name
-                  }
-                }
-              }
-
-              repositories(first: 9, privacy: PUBLIC, orderBy: {field: UPDATED_AT, direction: DESC}) {
-                edges {
-                  node {
-                    id
-                    name
-                    description
-                    forkCount
-                    createdAt
-                    pushedAt
-                    updatedAt
-                    isFork
-                    url
-                    primaryLanguage {
-                      id
-                      name
-                      color
-                    }
-                  }
-                }
-              }
-              repositoriesContributedTo(first: 6) {
-                edges {
-                  node {
-                    id
-                    name
-                    description
-                    forkCount
-                    createdAt
-                    pushedAt
-                    updatedAt
-                    isFork
-                    url
-                    owner {
-                      url
-                      login
-                    }
-                    primaryLanguage {
-                      id
-                      name
-                      color
-                    }
-                  }
-                }
-              }
-              starredRepositories(first: 240, orderBy: {field: STARRED_AT, direction: DESC}) {
-                edges {
-                  node {
-                    id
-                    name
-                    url
-                    createdAt
-                    forkCount
-                    owner {
-                      url
-                      login
-                    }
-                  }
-                }
-              }
-            }
-          }
-        `,
+        typeName: 'GitHub',
+        fieldName: 'github',
+        // Url to query from
+        url: 'https://api.github.com/graphql',
+        // HTTP headers
+        headers: {
+          Authorization: `bearer ${process.env.GATSBY_GITHUB_TOKEN}`,
+        },
+        // Additional options to pass to node-fetch
+        fetchOptions: {},
       },
     },
-    // {
-    //   resolve: 'gatsby-source-filesystem',
-    //   options: {
-    //     name: 'content',
-    //     path: `${__dirname}/src/content`,
-    //   },
-    // },
     {
       resolve: 'gatsby-transformer-remark',
       options: {

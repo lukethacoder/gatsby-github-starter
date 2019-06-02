@@ -16,76 +16,74 @@ const IndexPage: React.SFC<any> = () => (
   <StaticQuery
     query={graphql`
       query IndexQuery {
-        githubData {
-          data {
-            viewer {
-              pinnedRepositories {
-                edges {
-                  node {
+        github {
+          user(login: "lukethacoder") {
+            pinnedRepositories(first: 6) {
+              edges {
+                node {
+                  id
+                  name
+                  description
+                  url
+                  createdAt
+                  primaryLanguage {
                     id
                     name
-                    description
-                    url
-                    createdAt
-                    primaryLanguage {
-                      id
-                      name
-                      color
-                    }
+                    color
                   }
                 }
               }
-              repositories {
-                edges {
-                  node {
+            }
+            repositories(first: 6, privacy: PUBLIC, orderBy: { field: UPDATED_AT, direction: DESC }) {
+              edges {
+                node {
+                  id
+                  name
+                  description
+                  url
+                  createdAt
+                  primaryLanguage {
                     id
                     name
-                    description
-                    url
-                    createdAt
-                    primaryLanguage {
-                      id
-                      name
-                      color
-                    }
+                    color
                   }
                 }
               }
-              repositoriesContributedTo {
-                edges {
-                  node {
+            }
+            repositoriesContributedTo(first: 6) {
+              edges {
+                node {
+                  id
+                  name
+                  description
+                  forkCount
+                  createdAt
+                  pushedAt
+                  updatedAt
+                  url
+                  owner {
+                    url
+                    login
+                  }
+                  primaryLanguage {
                     id
                     name
-                    description
-                    forkCount
-                    createdAt
-                    pushedAt
-                    updatedAt
-                    url
-                    owner {
-                      url
-                      login
-                    }
-                    primaryLanguage {
-                      id
-                      name
-                      color
-                    }
+                    color
                   }
                 }
               }
-              starredRepositories {
-                edges {
-                  node {
-                    id
-                    name
+            }
+            starredRepositories(first: 100) {
+              edges {
+                node {
+                  id
+                  name
+                  url
+                  createdAt
+                  forkCount
+                  owner {
                     url
-                    createdAt
-                    forkCount
-                    owner {
-                      url
-                      login
-                    }
+                    login
                   }
                 }
               }
@@ -99,29 +97,29 @@ const IndexPage: React.SFC<any> = () => (
         <Page>
           <Container>
             <ContainerChild>
-              {data.githubData.data.viewer.pinnedRepositories.edges.length > 0 ? (
+              {data.github.user.pinnedRepositories.edges.length > 0 ? (
                 <>
                   <H1>Pinned Repos</H1>
-                  <RepoContainer data={data.githubData.data.viewer.pinnedRepositories.edges} />
+                  <RepoContainer data={data.github.user.pinnedRepositories.edges} />
                 </>
               ) : null}
-              {data.githubData.data.viewer.repositories.edges.length > 0 ? (
+              {data.github.user.repositories.edges.length > 0 ? (
                 <>
                   <H1>Recently Updated</H1>
-                  <RepoContainer data={data.githubData.data.viewer.repositories.edges} />
+                  <RepoContainer data={data.github.user.repositories.edges} />
                 </>
               ) : null}
-              {data.githubData.data.viewer.repositoriesContributedTo.edges.length > 0 ? (
+              {data.github.user.repositoriesContributedTo.edges.length > 0 ? (
                 <>
                   <H1>Contributions</H1>
-                  <RepoContainer data={data.githubData.data.viewer.repositoriesContributedTo.edges} />
+                  <RepoContainer data={data.github.user.repositoriesContributedTo.edges} />
                 </>
               ) : null}
 
-              {data.githubData.data.viewer.starredRepositories.edges.length > 0 ? (
+              {data.github.user.starredRepositories.edges.length > 0 ? (
                 <>
-                  <H1>Starred Repos ({data.githubData.data.viewer.starredRepositories.edges.length})</H1>
-                  <StarredReposContainer data={data.githubData.data.viewer.starredRepositories.edges} />
+                  <H1>Starred Repos ({data.github.user.starredRepositories.edges.length})</H1>
+                  <StarredReposContainer data={data.github.user.starredRepositories.edges} />
                 </>
               ) : null}
             </ContainerChild>

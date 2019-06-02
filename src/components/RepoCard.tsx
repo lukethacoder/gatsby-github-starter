@@ -5,7 +5,7 @@ import { widths, breakpoints, colors } from '../styles/variables'
 import { getEmSize, trans } from '../styles/mixins'
 
 interface RepoItemProps {
-  data: {
+  node: {
     id: String
     name: String
     description: String
@@ -28,28 +28,31 @@ interface RepoItemProps {
 }
 
 const RepoCard: React.SFC<RepoItemProps> = (repo_data: RepoItemProps) => {
-  console.log(repo_data.data)
+  const current_data = repo_data.data
+  console.log(current_data.primaryLanguage)
   return (
     <SingleItem>
       <div>
-        <a href={repo_data.data.url} target="_blank">
-          <h3>{repo_data.data.name}</h3>
+        <a href={current_data.url} target="_blank">
+          <h3>{current_data.name}</h3>
         </a>
-        <p>{repo_data.data.description}</p>
+        <p>{current_data.description}</p>
       </div>
-      <LangWrapper>
-        <svg height="24" width="24">
-          <circle
-            cx="12"
-            cy="12"
-            r="6"
-            stroke={repo_data.data.primaryLanguage.color}
-            stroke-width="0"
-            fill={repo_data.data.primaryLanguage.color}
-          />
-        </svg>
-        <p>{repo_data.data.primaryLanguage.name}</p>
-      </LangWrapper>
+      {current_data.primaryLanguage ? (
+        <LangWrapper>
+          <svg height="24" width="24">
+            <circle
+              cx="12"
+              cy="12"
+              r="6"
+              stroke={current_data.primaryLanguage.color}
+              stroke-width="0"
+              fill={current_data.primaryLanguage.color}
+            />
+          </svg>
+          <p>{current_data.primaryLanguage.name}</p>
+        </LangWrapper>
+      ) : null}
     </SingleItem>
   )
 }

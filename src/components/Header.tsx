@@ -10,20 +10,18 @@ const Header: React.SFC<any> = () => (
   <StaticQuery
     query={graphql`
       query HeaderQuery {
-        githubData {
-          data {
-            viewer {
-              login
-              bio
-              name
-              company
-              avatarUrl
-              url
-              status {
-                id
-                emoji
-                message
-              }
+        github {
+          user(login: "lukethacoder") {
+            login
+            bio
+            name
+            company
+            avatarUrl
+            url
+            status {
+              id
+              emoji
+              message
             }
           }
         }
@@ -33,18 +31,20 @@ const Header: React.SFC<any> = () => (
       <StyledHeader>
         <HeaderFixed>
           <HeaderUser>
-            <HeaderImage href={data.githubData.data.viewer.url} target="_blank">
-              <img src={data.githubData.data.viewer.avatarUrl} />
-              <div>
-                <p>
-                  {data.githubData.data.viewer.status.emoji} {data.githubData.data.viewer.status.message}
-                </p>
-              </div>
+            <HeaderImage href={data.github.user.url} target="_blank">
+              <img src={data.github.user.avatarUrl} />
+              {data.github.user.status ? (
+                <div>
+                  <p>
+                    {data.github.user.status.emoji} {data.github.user.status.message}
+                  </p>
+                </div>
+              ) : null}
             </HeaderImage>
             <HeaderUserContent>
-              <h2>{data.githubData.data.viewer.name}</h2>
-              <h4>{data.githubData.data.viewer.login}</h4>
-              <p>{data.githubData.data.viewer.bio}</p>
+              <h2>{data.github.user.name}</h2>
+              <h4>{data.github.user.login}</h4>
+              <p>{data.github.user.bio}</p>
 
               <ContentList>
                 <li>
@@ -71,7 +71,7 @@ const Header: React.SFC<any> = () => (
               </ContentList>
             </HeaderUserContent>
           </HeaderUser>
-          <MenuLink href={data.githubData.data.viewer.url} target="_blank">
+          <MenuLink href={data.github.user.url} target="_blank">
             github.
           </MenuLink>
         </HeaderFixed>
