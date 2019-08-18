@@ -67,7 +67,7 @@
     "@types/react-helmet": "^5.0.7",
     "gh-pages": "^2.0.0",
     "prettier": "^1.17.1",
-    "rimraf": "^2.6.2",
+    "rimraf": "^3.0.0",
     "tslint": "^5.17.0",
     "tslint-config-blvd": "^1.2.1",
     "tslint-config-prettier": "^1.15.0",
