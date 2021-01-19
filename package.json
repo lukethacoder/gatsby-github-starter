@@ -53,7 +53,7 @@
     "polished": "^4.0.5",
     "prism-themes": "^1.0.1",
     "prismjs": "^1.15.0",
-    "react": "^16.8.6",
+    "react": "^17.0.1",
     "react-dom": "^16.5.2",
     "react-helmet": "^6.1.0",
     "react-spring": "^8.0.20",
