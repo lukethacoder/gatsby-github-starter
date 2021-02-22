@@ -24,7 +24,7 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.5",
+    "@emotion/core": "^11.0.0",
     "@emotion/styled": "^10.0.11",
     "babel-plugin-styled-components": "^1.7.1",
     "classnames": "^2.2.6",
